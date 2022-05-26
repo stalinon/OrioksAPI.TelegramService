@@ -1,9 +1,11 @@
-﻿public static class DotEnv
+﻿namespace TelegramService;
+
+internal static class DotEnv
 {
-    public static void Load(string filePath)
+    public static void Load(string filePath = ConfigKeys.EnvPath)
     {
         if (!File.Exists(filePath))
-            throw new FileNotFoundException("Environment file required", "local.env");
+            throw new FileNotFoundException($"Environment file not found on path {Path.GetFullPath(filePath)}", "local.env");
 
         foreach (var line in File.ReadAllLines(filePath))
         {

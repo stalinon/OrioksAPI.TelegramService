@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		local.env = local.env
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CA435F85-A06E-41E7-8203-F4AC35CF54CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramService.Tests", "tests\TelegramService.Tests\TelegramService.Tests.csproj", "{60BC7F62-3851-4779-AA71-41B10806F8F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,12 +26,17 @@ Global
 		{1FF4479D-4C1B-4188-BAA7-8864E81D2893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FF4479D-4C1B-4188-BAA7-8864E81D2893}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FF4479D-4C1B-4188-BAA7-8864E81D2893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60BC7F62-3851-4779-AA71-41B10806F8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60BC7F62-3851-4779-AA71-41B10806F8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60BC7F62-3851-4779-AA71-41B10806F8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60BC7F62-3851-4779-AA71-41B10806F8F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1FF4479D-4C1B-4188-BAA7-8864E81D2893} = {225A61B9-9200-4D23-B2D7-709790BCE756}
+		{60BC7F62-3851-4779-AA71-41B10806F8F6} = {CA435F85-A06E-41E7-8203-F4AC35CF54CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F05B311D-0EDD-4189-AAD6-DDA112FBA263}
