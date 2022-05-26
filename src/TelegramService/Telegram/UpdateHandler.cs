@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using TelegramService.Orioks;
 
 namespace TelegramService.Telegram;
 
@@ -47,9 +43,12 @@ internal sealed class UpdateHandler : IUpdateHandler
 
         Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
 
+        var orioks = new OrioksClient();
+        var response = await orioks.GetEmptyAuditoriesAsync();
+
         Message sentMessage = await botClient.SendTextMessageAsync(
             chatId: chatId,
-            text: "You said:\n" + messageText,
+            text: $"ВСЕГО АУДИТОРИЙ СВОБОДНО НА {response?.Pair} - {response?.Total} ШТУК:\n\n" + string.Join("\n",response!.Items),
             cancellationToken: cancellationToken);
     }
 }
