@@ -24,7 +24,7 @@ internal sealed class OrioksClient
     /// <summary>
     ///     Получить пустые аудитории
     /// </summary>
-    public async Task<Response?> GetEmptyAuditoriesAsync()
+    public async Task<Response> GetEmptyAuditoriesAsync()
     {
         var uri = new PathBuilder().Append(ConfigKeys.VERSION).Append("schedules").Append("empty-auditories").ToString();
 
@@ -36,7 +36,7 @@ internal sealed class OrioksClient
 
         var response = await _client.GetAsync<Response>(request);
 
-        return response;
+        return response!;
 
     }
 
