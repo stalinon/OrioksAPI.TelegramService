@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
+using TelegramService.Orioks;
 
 namespace TelegramService.Telegram;
 
@@ -16,6 +13,8 @@ namespace TelegramService.Telegram;
 /// </summary>
 internal sealed class UpdateHandler : IUpdateHandler
 {
+    private readonly OrioksClient _client = new OrioksClient();
+
     /// <summary>
     ///     Обработка ошибки
     /// </summary>
@@ -45,11 +44,67 @@ internal sealed class UpdateHandler : IUpdateHandler
         var chatId = update.Message.Chat.Id;
         var messageText = update.Message.Text;
 
-        Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
+        var message = await AnalyzeMessageAsync(botClient, messageText);
 
-        Message sentMessage = await botClient.SendTextMessageAsync(
-            chatId: chatId,
-            text: "You said:\n" + messageText,
-            cancellationToken: cancellationToken);
+        await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: message.Text,
+                replyMarkup: message.ReplyMarkup ?? null,
+                cancellationToken: cancellationToken);
+    }
+
+    private async Task<CustomMessage> AnalyzeMessageAsync(ITelegramBotClient botClient, string? text)
+    {
+        if (text == ButtonTextEnumMapping.Map(ButtonScheduleEnum.GET_EMPTY_AUDITORIES))
+        {
+            var auditories = await _client.GetEmptyAuditoriesAsync();
+            var orderedAuditories = auditories.Items.OrderBy(x => x);
+
+            var str = $"СПИСОК ПУСТЫХ АУДИТОРИЙ НА `{auditories.Pair}` \n" +
+                      $"Количество: {auditories.Total} \n";
+            foreach (var item in orderedAuditories)
+            {
+                str += "\t" + item.ToString() + "\n";
+            }
+
+            return new CustomMessage
+            {
+                Text = str
+            };
+
+        }
+        else
+        {
+            ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
+            {
+                new KeyboardButton[] { ButtonTextEnumMapping.Map(ButtonScheduleEnum.GET_EMPTY_AUDITORIES) }
+            })
+            {
+                ResizeKeyboard = true
+            };
+
+            return new CustomMessage
+            {
+                Text = "Выберите опцию",
+                ReplyMarkup = replyKeyboardMarkup
+            };
+        }
+    }
+
+    /// <summary>
+    ///     Вспомогательный подкласс для возврата
+    ///     сообщения
+    /// </summary>
+    class CustomMessage
+    {
+        /// <summary>
+        ///     Текст сообщения
+        /// </summary>
+        public string Text { get; set; } = "Выберай";
+
+        /// <summary>
+        ///     Reply Markup
+        /// </summary>
+        public IReplyMarkup? ReplyMarkup { get; set; }
     }
 }

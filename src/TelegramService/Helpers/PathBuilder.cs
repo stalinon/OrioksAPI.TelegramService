@@ -12,7 +12,7 @@ internal class PathBuilder
     /// </summary>
     private StringBuilder Path { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="PathBuilder" />
     public PathBuilder()
     {
         Path = new StringBuilder(ConfigKeys.BASE_URL);
@@ -21,7 +21,11 @@ internal class PathBuilder
     /// <summary>
     ///     Добавляет копию строки к результирующей
     /// </summary>
-    public string Append(string partPath) => Path.Append("/" + partPath).ToString();
+    public PathBuilder Append(string partPath) 
+    { 
+        Path = Path.Append("/" + partPath); 
+        return this;
+    }
 
     /// <summary>
     ///     Получить в строковом виде

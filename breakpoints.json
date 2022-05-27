@@ -1,0 +1,51 @@
+[
+  {
+    "version": "v1",
+    "sections": [
+      {
+        "name": "schedule",
+        "methods": [
+          {
+            "name": "empty-auditories",
+            "params": []
+          },
+          {
+            "name": null,
+            "params": [
+              {
+                "name": "name",
+                "format": "string"
+              },
+              {
+                "name": "teacherName",
+                "format": "string"
+              },
+              {
+                "name": "groupKey",
+                "format": "string"
+              },
+              {
+                "name": "date",
+                "format": "DateTime"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "teachers",
+        "methods": [
+          {
+            "name": null,
+            "params": [
+              {
+                "name": "name",
+                "format": "string"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

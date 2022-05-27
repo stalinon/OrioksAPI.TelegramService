@@ -11,11 +11,10 @@ internal sealed class TgClient
 {
     /// Поля, необходимые для работы клиента
     private TelegramBotClient _client = new TelegramBotClient(ConfigKeys.API_TOKEN);
-    private CancellationTokenSource _cts = new CancellationTokenSource();
     private static TgClient _instance { get; set; } = default!;
 
-    /// <inheritdoc />
-    public static async Task<TgClient> CreateInstance()
+    /// <inheritdoc cref="TgClient" />
+    public static TgClient CreateInstance(CancellationToken cts)
     {
         var instance = new TgClient();
 
@@ -23,13 +22,9 @@ internal sealed class TgClient
         {
             AllowedUpdates = Array.Empty<UpdateType>()
         };
-        instance._client.StartReceiving(new UpdateHandler(), options, instance._cts.Token);
+        instance._client.StartReceiving(new UpdateHandler(), options, cts);
 
-        var me = await instance._client.GetMeAsync();
-
-        Console.WriteLine($"Start listening for @{me.Username}");
-        Console.ReadLine();
-        instance._cts.Cancel();
+        Console.WriteLine($"Start listening");
 
         _instance = instance;
 
