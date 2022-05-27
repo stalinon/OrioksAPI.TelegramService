@@ -44,6 +44,8 @@ internal sealed class UpdateHandler : IUpdateHandler
         var chatId = update.Message.Chat.Id;
         var messageText = update.Message.Text;
 
+        Console.WriteLine($"Get message::{chatId}::{messageText}");
+
         var message = await AnalyzeMessageAsync(botClient, messageText);
 
         await botClient.SendTextMessageAsync(
